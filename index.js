@@ -32,16 +32,61 @@ function getRandomImages () {
 
 const randomImages = getRandomImages();
 
+let selectedItem = null;
+let deletedImagesCount = 0;
+
+function handleClick(that) {
+    document.querySelector(".main").style.pointerEvents = "none";
+    that.style.transform = "rotateY(-180deg)"
+
+    // Don't allow to select same item
+    if (selectedItem!==that) {
+        if (!selectedItem) {
+            selectedItem = that;
+            document.querySelector(".main").style.pointerEvents = "all";
+        }
+        else {
+            setTimeout(() => {
+                if (that.dataset.imageName === selectedItem.dataset.imageName) {
+                    that.innerHTML = '';
+                    selectedItem.innerHTML = '';
+                    deletedImagesCount+=2;
+                }
+                else {
+                    that.style.transform = "rotateY(0deg)";
+                    selectedItem.style.transform = "rotateY(0deg)"
+                }
+                selectedItem = null;
+                document.querySelector(".main").style.pointerEvents = "all";
+                if (deletedImagesCount === items) {
+                    alert("Hurray!! You won the game");
+                    location.reload();
+                }
+            }, 1000);
+        }   
+    }
+    else {
+        document.querySelector(".main").style.pointerEvents = "all";
+    }
+}
+
 function getChildDiv(index) {
     const backDiv = document.createElement("div");
     const frontDiv = document.createElement("div");
 
     frontDiv.classList.add('child', 'front');
+    frontDiv.textContent = "Open";
 
     backDiv.classList.add('child', 'back');
     backDiv.style = `background-image: url("./images/${randomImages[index]}.jpeg")`
     
     const div = document.createElement('div');
+    div.className = "card-container"
+    div.dataset.imageName = randomImages[index];
+
+    div.addEventListener('click', function() {
+        handleClick(this);
+    });
     div.appendChild(frontDiv);
     div.appendChild(backDiv);
     return div;
@@ -49,9 +94,7 @@ function getChildDiv(index) {
 
 let i = 0;
 while (i<items) {
-
     const selector =  document.querySelector(".main");
-
     if (i%itemsInEachRow == 0) {
         const mainDiv = document.createElement("div");
         mainDiv.className = 'parent';
