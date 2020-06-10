@@ -4,7 +4,6 @@ const itemsInEachRow = 4;
 
 const imageNames = ['arbok', 'balbasur', 'beedrill', 'blastoise', 'butterfree', 'charmandar', 'charmelon', 'pikachu'];
 
-// Stack Overflow
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
