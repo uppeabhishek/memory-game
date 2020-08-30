@@ -35,14 +35,14 @@ let selectedItem = null;
 let deletedImagesCount = 0;
 
 function handleClick(that) {
-    document.querySelector(".main").style.pointerEvents = "none";
+    document.querySelector(".content").style.pointerEvents = "none";
     that.style.transform = "rotateY(-180deg)"
 
     // Don't allow to select same item
     if (selectedItem!==that) {
         if (!selectedItem) {
             selectedItem = that;
-            document.querySelector(".main").style.pointerEvents = "all";
+            document.querySelector(".content").style.pointerEvents = "all";
         }
         else {
             setTimeout(() => {
@@ -56,7 +56,7 @@ function handleClick(that) {
                     selectedItem.style.transform = "rotateY(0deg)"
                 }
                 selectedItem = null;
-                document.querySelector(".main").style.pointerEvents = "all";
+                document.querySelector(".content").style.pointerEvents = "all";
                 if (deletedImagesCount === items) {
                     alert("Hurray!! You won the game");
                     location.reload();
@@ -65,7 +65,7 @@ function handleClick(that) {
         }   
     }
     else {
-        document.querySelector(".main").style.pointerEvents = "all";
+        document.querySelector(".content").style.pointerEvents = "all";
     }
 }
 
@@ -93,7 +93,7 @@ function getChildDiv(index) {
 
 let i = 0;
 while (i<items) {
-    const selector =  document.querySelector(".main");
+    const selector =  document.querySelector(".content");
     if (i%itemsInEachRow == 0) {
         const mainDiv = document.createElement("div");
         mainDiv.className = 'parent';
